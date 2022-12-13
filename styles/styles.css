@@ -34,8 +34,8 @@ body {
     background: rgb(33, 34, 38);
     background: linear-gradient(180deg, rgba(33, 34, 38, 1) 0%, rgba(33, 37, 49, 1) 100%) no-repeat;
     color: #f4f4f4;
-    min-height: 100vh;
-    font-family: 'Lato', sans-serif;
+    min-height: 100%;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
     --header-height: 70px;
     --footer-height: 0px;
@@ -79,6 +79,11 @@ body.loading .loader {
 .main-header__branding {
     flex: 0 0 160px;
     font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.main-header__branding:hover {
+    font-size: 26px;
+    transition: font-size .3s;
 }
 
 .main-header__search {
@@ -167,7 +172,7 @@ main.content {
     width: 0;
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100%;
     overscroll-behavior: contain;
     overflow-x: hidden;
     overflow-y: auto;
@@ -181,7 +186,7 @@ main.content {
 
 .movie-details.--visible {
     width: 50%;
-    flex: 0 0 50%;
+    flex: 0 0 40%;
     display: block;
 }
 
