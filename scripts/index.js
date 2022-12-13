@@ -74,7 +74,7 @@ function searchInMovies(e) {
 function nextBtnClickHandler() {
 
     let trend = searchInput.value;
-    if (!trend) trend = "Lovely";
+    if (!trend) trend = "dance";
 
     // search with a trend less than 3 chars cause an error on omdbapi
     if (trend.length < 3)
