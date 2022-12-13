@@ -33,7 +33,7 @@ window.onresize = function () {
 };
 
 function initialMovieList() {
-    getMovies("Lovely")
+    getMovies("dance")
         .then(({movies = [], totalResult = 0}) => {
             movies.map(generateMovieItem)
         });
