@@ -263,7 +263,8 @@ main.content {
     padding: 2px 6px;
     font-size: 14px;
     border-radius: 3px;
-    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
     font-weight: bold;
     color: #e4ae17;
 }
