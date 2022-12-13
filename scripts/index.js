@@ -209,27 +209,33 @@ function showMovieInDetails(movieObj, targetItem) {
                         style="background-image: url('${movieObj.Poster}')"></figure>
                     <div class="movie-details__title">
                         <h2>${movieObj.Title}</h2>
-                        <span class="movie-details__rating">${movieObj.imdbRating} / 10</span>
+                        <br>
+                        <span class="movie-details__rating">IMDB: ${movieObj.imdbRating} / 10</span>
+                        <span>   </span>
+                        <span class="movie-details__rating">Metascore: ${movieObj.Metascore}</span>
                     </div>
                     <div class="movie-details__meta">
-                        <span><span class="--label">Released:</span>${movieObj.Released}</span>&nbsp;-&nbsp;
+                        <span><span class="--label">Released:</span>${movieObj.Released}</span>
+                        <br>
                         <span><span class="--label">Runtime:</span>${movieObj.Runtime}</span>
                     </div>
                     <div class="movie-details__meta"><span class="--label">Genre:</span>${movieObj.Genre}</div>
                     <div class="movie-details__meta">
-                        <span><span class="--label">Director:</span>${movieObj.Director}</span>&nbsp;-&nbsp;
+                        <span><span class="--label">Director:</span>${movieObj.Director}</span>
+                        <br>
                         <span><span class="--label">Writer:</span>${movieObj.Writer}</span>
                     </div>
                     <div class="movie-details__meta">
-                        <span><span class="--label">Country:</span>${movieObj.Country}</span>&nbsp;-&nbsp;
+                        <span><span class="--label">Country:</span>${movieObj.Country}</span>
+                        <br>
                         <span><span class="--label">Language:</span>${movieObj.Language}</span>
                     </div>
                     <div class="movie-details__meta">
-                        <span class="--label">Actors:</span>${movieObj.Actors}
+                        <span class="--label">Actor(s):</span>${movieObj.Actors}
                     </div>
                     <div class="movie-details__meta">
                         <span class="--label">Summary:</span>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                        <p>${movieObj.Plot}</p>
                     </div>`;
 
     detailsWrapper.append(detailsElm);
