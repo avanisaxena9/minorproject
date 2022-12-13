@@ -208,7 +208,7 @@ function showMovieInDetails(movieObj, targetItem) {
                     <figure class="movie-details__poster"
                         style="background-image: url('${movieObj.Poster}')"></figure>
                     <div class="movie-details__title">
-                        <h2>${movieObj.Title}</h2>
+                        <h2>${movieObj.Title}</h2> <span class="typename">[${movieObj.Type}]</span>
                         <br>
                         <span class="movie-details__rating">IMDB: ${movieObj.imdbRating} / 10</span>
                         <span>   </span>
@@ -216,18 +216,18 @@ function showMovieInDetails(movieObj, targetItem) {
                     </div>
                     <div class="movie-details__meta">
                         <span><span class="--label">Released:</span>${movieObj.Released}</span>
-                        <br>
+                        <br><br>
                         <span><span class="--label">Runtime:</span>${movieObj.Runtime}</span>
                     </div>
                     <div class="movie-details__meta"><span class="--label">Genre:</span>${movieObj.Genre}</div>
                     <div class="movie-details__meta">
                         <span><span class="--label">Director:</span>${movieObj.Director}</span>
-                        <br>
+                        <br><br>
                         <span><span class="--label">Writer:</span>${movieObj.Writer}</span>
                     </div>
                     <div class="movie-details__meta">
                         <span><span class="--label">Country:</span>${movieObj.Country}</span>
-                        <br>
+                        <br><br>
                         <span><span class="--label">Language:</span>${movieObj.Language}</span>
                     </div>
                     <div class="movie-details__meta">

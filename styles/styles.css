@@ -358,3 +358,9 @@ main.content {
 .movie-item__meta__imdb-link a:hover {
     text-decoration: underline;
 }
+
+.typename{
+    color: #999;
+    font-size: small;
+    padding-left: 5px;
+}
