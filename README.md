@@ -6,7 +6,9 @@ A simple movie search website.
 
 Special topics covered:
 
-- Promises and Fetch data with API  
+- Promises and Fetch data with API
 - Control DOM behaviors and events  
 - Usage of position: static; in CSS  
 - Using CSS variables  
+
+API used - OMDB api 
