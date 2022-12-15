@@ -11,117 +11,103 @@ let SEARCH_DEBOUNCE_FLAG = null;
 let CURRENT_PAGE = 1;
 
 window.onload = function onLoadDone() {
-    document.body.classList.add("loaded");
+  document.body.classList.add("loaded");
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  if (!resultWrapper) throw new Error("Result wrapper is not exist");
 
-    if (!resultWrapper)
-        throw new Error("Result wrapper is not exist");
+  if (!detailsWrapper) throw new Error("Details wrapper is not exist");
 
-    if (!detailsWrapper)
-        throw new Error("Details wrapper is not exist");
+  // init movies list
+  initialMovieList();
 
-    // init movies list
-    initialMovieList();
-
-    initListeners();
+  initListeners();
 });
 
 window.onresize = function () {
-    calcItemsSize();
+  calcItemsSize();
 };
 
 function initialMovieList() {
-    getMovies("dance")
-        .then(({movies = [], totalResult = 0}) => {
-            movies.map(generateMovieItem)
-        });
-
+  getMovies("dance").then(({ movies = [], totalResult = 0 }) => {
+    movies.map(generateMovieItem);
+  });
 }
 
 function initListeners() {
-    detailsWrapper.querySelector(".movie-details__close")
-        .addEventListener("click", closeDetailsSection);
+  detailsWrapper
+    .querySelector(".movie-details__close")
+    .addEventListener("click", closeDetailsSection);
 
-    searchInput.addEventListener("input", searchInMovies);
+  searchInput.addEventListener("input", searchInMovies);
 
-    nextBtn.addEventListener("click", nextBtnClickHandler)
+  nextBtn.addEventListener("click", nextBtnClickHandler);
 }
 
 function searchInMovies(e) {
-    if (SEARCH_DEBOUNCE_FLAG)
-        clearTimeout(SEARCH_DEBOUNCE_FLAG);
-    SEARCH_DEBOUNCE_FLAG = setTimeout(() => {
+  if (SEARCH_DEBOUNCE_FLAG) clearTimeout(SEARCH_DEBOUNCE_FLAG);
+  SEARCH_DEBOUNCE_FLAG = setTimeout(() => {
+    let trend = e.target.value;
+    if (!trend) trend = "Lovely";
 
-        let trend = e.target.value;
-        if (!trend) trend = "Lovely";
+    // search with a trend less than 3 chars cause an error on omdbapi
+    if (trend.length < 3) return;
 
-        // search with a trend less than 3 chars cause an error on omdbapi
-        if (trend.length < 3)
-            return;
+    // reset page number on each search
+    CURRENT_PAGE = 1;
 
-        // reset page number on each search
-        CURRENT_PAGE = 1;
+    trend = trend.trim();
 
-        trend = trend.trim()
-
-        getMoviesAndParse(trend, CURRENT_PAGE)
-
-    }, 300)
+    getMoviesAndParse(trend, CURRENT_PAGE);
+  }, 300);
 }
 
 function nextBtnClickHandler() {
+  let trend = searchInput.value;
+  if (!trend) trend = "dance";
 
-    let trend = searchInput.value;
-    if (!trend) trend = "dance";
+  // search with a trend less than 3 chars cause an error on omdbapi
+  if (trend.length < 3) return;
 
-    // search with a trend less than 3 chars cause an error on omdbapi
-    if (trend.length < 3)
-        return;
-
-    getMoviesAndParse(trend, ++CURRENT_PAGE)
+  getMoviesAndParse(trend, ++CURRENT_PAGE);
 }
 
 function getMoviesAndParse(trend, page) {
+  resultWrapper.innerHTML = "";
 
-    resultWrapper.innerHTML = '';
+  // update search-trend span
+  searchTrendSpan.innerText =
+    trend.length < 10 ? trend : trend.substr(0, 8) + "...";
+  nextBtn.style.display = "none";
+  pageNumberSpan.innerText = "";
 
-    // update search-trend span
-    searchTrendSpan.innerText = trend.length < 10 ? trend : trend.substr(0, 8) + '...';
-    nextBtn.style.display = "none";
-    pageNumberSpan.innerText = '';
+  // handle search
+  getMovies(trend, page).then(({ movies = [], totalResults = 0 }) => {
+    if (page * 10 < +totalResults) {
+      pageNumberSpan.innerText = `| Page: ${page}`;
+      nextBtn.style.display = "inline-block";
+    }
 
-    // handle search
-    getMovies(trend, page)
-        .then(({movies = [], totalResults = 0}) => {
+    if (movies.length) movies.map(generateMovieItem);
+    else generateNoContentPlaceholder();
 
-            if ((page * 10) < +totalResults) {
-                pageNumberSpan.innerText = `| Page: ${page}`;
-                nextBtn.style.display = "inline-block";
-            }
-
-            if (movies.length)
-                movies.map(generateMovieItem);
-            else
-                generateNoContentPlaceholder();
-
-            // scroll to top after fetch
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            })
-        });
+    // scroll to top after fetch
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
 }
 
 function generateMovieItem(item) {
-    let movieElm = document.createElement("div");
-    movieElm.setAttribute("data-imdbid", item.imdbID);
-    movieElm.classList.add("movie-item");
+  let movieElm = document.createElement("div");
+  movieElm.setAttribute("data-imdbid", item.imdbID);
+  movieElm.classList.add("movie-item");
 
-    movieElm.addEventListener("click", handleMovieItemClick);
+  movieElm.addEventListener("click", handleMovieItemClick);
 
-    movieElm.innerHTML = `
+  movieElm.innerHTML = `
             <figure class="movie-item__poster"
                 style="background-image: url('${item.Poster}')"></figure>
             <h2 class="movie-item__title">${item.Title}</h2>
@@ -132,78 +118,81 @@ function generateMovieItem(item) {
                     <a href="https://www.imdb.com/title/${item.imdbID}" target="_blank">IMDB</a></span>
             </div>`;
 
-    resultWrapper.append(movieElm)
+  resultWrapper.append(movieElm);
 }
 
 function generateNoContentPlaceholder() {
-    let placeholderElm = document.createElement("p");
-    placeholderElm.classList.add("no-content-placeholder");
+  let placeholderElm = document.createElement("p");
+  placeholderElm.classList.add("no-content-placeholder");
 
-    placeholderElm.innerText = `Movies not found.`;
+  placeholderElm.innerText = `Movies not found.`;
 
-    resultWrapper.append(placeholderElm)
+  resultWrapper.append(placeholderElm);
 }
 
 function handleMovieItemClick(e) {
-    const movieItem = e.target.closest(".movie-item");
-    const movieItemID = movieItem.getAttribute("data-imdbid");
+  const movieItem = e.target.closest(".movie-item");
+  const movieItemID = movieItem.getAttribute("data-imdbid");
 
-    // handle class toggle
-    removeDetailsClassFromItems();
-    movieItem.classList.add("--in-details");
+  // handle class toggle
+  removeDetailsClassFromItems();
+  movieItem.classList.add("--in-details");
 
-    // get movie from api
-    getSingleMovie(movieItemID)
-        .then(movieObj => {
-            showMovieInDetails(movieObj, movieItem)
-        })
+  // get movie from api
+  getSingleMovie(movieItemID).then((movieObj) => {
+    showMovieInDetails(movieObj, movieItem);
+  });
 }
 
 function calcItemsSize() {
-    let columnsCount = Math.floor(resultWrapper.offsetWidth / 200) || 1;
-    document.body.style.setProperty("--poster-height", (resultWrapper.offsetWidth / columnsCount) + "px");
-    document.body.style.setProperty("--result-grid-column", columnsCount.toString());
+  let columnsCount = Math.floor(resultWrapper.offsetWidth / 200) || 1;
+  document.body.style.setProperty(
+    "--poster-height",
+    resultWrapper.offsetWidth / columnsCount + "px"
+  );
+  document.body.style.setProperty(
+    "--result-grid-column",
+    columnsCount.toString()
+  );
 }
 
 function removeDetailsClassFromItems() {
-    document.querySelectorAll(".movie-item").forEach(mi => {
-        mi.classList.remove("--in-details");
-    });
+  document.querySelectorAll(".movie-item").forEach((mi) => {
+    mi.classList.remove("--in-details");
+  });
 }
 
 function closeDetailsSection() {
-    detailsWrapper.classList.remove("--visible");
-    removeDetailsClassFromItems();
-    calcItemsSize();
+  detailsWrapper.classList.remove("--visible");
+  removeDetailsClassFromItems();
+  calcItemsSize();
 }
 
 function showMovieInDetails(movieObj, targetItem) {
-    if (!detailsWrapper.classList.contains("--visible")) {
-        detailsWrapper.classList.add("--visible");
-    }
+  if (!detailsWrapper.classList.contains("--visible")) {
+    detailsWrapper.classList.add("--visible");
+  }
 
-    calcItemsSize();
+  calcItemsSize();
 
-    // scroll to target movie element
-    setTimeout(() => {
-        window.scrollTo({
-            top: targetItem.offsetTop - 20,
-            behavior: 'smooth'
-        })
-    }, 50);
+  // scroll to target movie element
+  setTimeout(() => {
+    window.scrollTo({
+      top: targetItem.offsetTop - 20,
+      behavior: "smooth",
+    });
+  }, 50);
 
-    let detailsElm = detailsWrapper.querySelector(".movie-details__inner");
-    if (!detailsElm)
-        detailsElm = document.createElement("div");
+  let detailsElm = detailsWrapper.querySelector(".movie-details__inner");
+  if (!detailsElm) detailsElm = document.createElement("div");
 
-    detailsElm.classList.add("movie-details__inner");
+  detailsElm.classList.add("movie-details__inner");
 
-    if (!movieObj.Poster || movieObj.Poster === "N/A")
-        detailsElm.classList.add("--no-poster");
-    else
-        detailsElm.classList.remove("--no-poster");
+  if (!movieObj.Poster || movieObj.Poster === "N/A")
+    detailsElm.classList.add("--no-poster");
+  else detailsElm.classList.remove("--no-poster");
 
-    detailsElm.innerHTML = `
+  detailsElm.innerHTML = `
                     <span class="loader"></span>
                     <figure class="movie-details__poster"
                         style="background-image: url('${movieObj.Poster}')"></figure>
@@ -238,5 +227,5 @@ function showMovieInDetails(movieObj, targetItem) {
                         <p>${movieObj.Plot}</p>
                     </div>`;
 
-    detailsWrapper.append(detailsElm);
+  detailsWrapper.append(detailsElm);
 }
