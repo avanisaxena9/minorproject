@@ -2,7 +2,7 @@
 
 A simple movie search website.
 
-See <a href="https://avanisaxena9.github.io/movie-details-generator/" target="_blank" >Online Demo</a> here. 
+See the <a href="https://avanisaxena9.github.io/movie-details-generator/" target="_blank" >Online Demo</a> here. 
 
 Special topics covered:
 
