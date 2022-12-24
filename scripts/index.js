@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // init movies list
   initialMovieList();
-
   initListeners();
 });
 
@@ -39,9 +38,7 @@ function initListeners() {
   detailsWrapper
     .querySelector(".movie-details__close")
     .addEventListener("click", closeDetailsSection);
-
   searchInput.addEventListener("input", searchInMovies);
-
   nextBtn.addEventListener("click", nextBtnClickHandler);
 }
 
@@ -69,7 +66,6 @@ function nextBtnClickHandler() {
 
   // search with a trend less than 3 chars cause an error on omdbapi
   if (trend.length < 3) return;
-
   getMoviesAndParse(trend, ++CURRENT_PAGE);
 }
 
