@@ -42,7 +42,7 @@ body {
   padding: 0;
   opacity: 0;
   transition: 0.8s;
-  background: rgb(33, 34, 38);
+  background: rgb(15, 17, 21);
   background: linear-gradient(
       180deg,
       rgba(33, 34, 38, 1) 0%,
