@@ -87,7 +87,7 @@ body.loading .loader {
   background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(4, 4, 4, 1) 100%
+      rgb(2 3 56)
     )
     no-repeat;
   display: flex;
