@@ -46,7 +46,7 @@ function searchInMovies(e) {
   if (SEARCH_DEBOUNCE_FLAG) clearTimeout(SEARCH_DEBOUNCE_FLAG);
   SEARCH_DEBOUNCE_FLAG = setTimeout(() => {
     let trend = e.target.value;
-    if (!trend) trend = "Lovely";
+    if (!trend) trend = "dance";
 
     // search with a trend less than 3 chars cause an error on omdbapi
     if (trend.length < 3) return;
@@ -80,7 +80,7 @@ function getMoviesAndParse(trend, page) {
 
   // handle search
   getMovies(trend, page).then(({ movies = [], totalResults = 0 }) => {
-    if (page * 10 < +totalResults) {
+    if (page * 20 < +totalResults) {
       pageNumberSpan.innerText = `| Page: ${page}`;
       nextBtn.style.display = "inline-block";
     }
