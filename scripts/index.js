@@ -80,7 +80,7 @@ function getMoviesAndParse(trend, page) {
 
   // handle search
   getMovies(trend, page).then(({ movies = [], totalResults = 0 }) => {
-    if (page * 20 < +totalResults) {
+    if (page * 10 < +totalResults) {
       pageNumberSpan.innerText = `| Page: ${page}`;
       nextBtn.style.display = "inline-block";
     }
