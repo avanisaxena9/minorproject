@@ -6,6 +6,7 @@ const searchInput = document.getElementById("search");
 const searchTrendSpan = document.getElementById("search-trend");
 const pageNumberSpan = document.getElementById("page-number");
 const nextBtn = document.getElementById("next-btn");
+const headerbtn = document.getElementById("header-btn");
 
 let SEARCH_DEBOUNCE_FLAG = null;
 let CURRENT_PAGE = 1;
@@ -224,4 +225,12 @@ function showMovieInDetails(movieObj, targetItem) {
                     </div>`;
 
   detailsWrapper.append(detailsElm);
+}
+
+// refresh page when click on MOVIQUE header
+function refreshHeader() {
+  console.log("Movique clicked");
+  headerbtn.addEventListener("click",  initialMovieList);
+  headerbtn.addEventListener("click",  initListeners);
+  // initListeners()
 }
