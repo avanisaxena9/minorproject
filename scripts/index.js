@@ -228,9 +228,9 @@ function showMovieInDetails(movieObj, targetItem) {
 }
 
 // refresh page when click on MOVIQUE header
-function refreshHeader() {
-  console.log("Movique clicked");
-  headerbtn.addEventListener("click",  initialMovieList);
-  headerbtn.addEventListener("click",  initListeners);
-  // initListeners()
-}
+// function refreshHeader() {
+//   console.log("Movique clicked");
+//   headerbtn.addEventListener("click",  initialMovieList);
+//   headerbtn.addEventListener("click",  initListeners);
+//   // initListeners()
+// }
