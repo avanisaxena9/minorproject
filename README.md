@@ -12,3 +12,5 @@ Special topics covered:
 - Using CSS variables
 
 API used - OMDB api 
+
+
