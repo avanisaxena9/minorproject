@@ -11,6 +11,9 @@ Special topics covered:
 - Usage of position: static; in CSS
 - Using CSS variables
 
-API used - OMDB api 
+API used - OMDB api
+
+
+
 
 
