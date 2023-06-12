@@ -6,7 +6,7 @@ See the <a href="https://avanisaxena9.github.io/movie-details-generator/" target
 
 Special topics covered:
 
-- Promises and Fetch data with API
+- Fetch data with API
 - Control DOM behaviors and events
 - Usage of position: static; in CSS
 - Using CSS variables
